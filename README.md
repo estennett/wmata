@@ -1,2 +1,2 @@
-# wmata
+# WMATA
 Washington DC Metro Information
