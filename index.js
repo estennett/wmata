@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
 var request = require('request');
+var cors = require('cors');
 var conn = mongoose.connect('mongodb://localhost/wmata');
 
 //setup express app
@@ -24,5 +25,5 @@ app.listen(process.env.PORT || 4000, function(){
 });
 
 //routes
-app.get("/line", lineController.index);
-app.get("/linedata", lineController.getLineData);
+app.get("/line", cors(), lineController.index);
+app.get("/linedata", cors(), lineController.getLineData);

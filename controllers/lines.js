@@ -1,5 +1,6 @@
 var request = require('request');
 var LineModel = require("../models/line");
+var env = require ("../env.js");
 
 var linesController = {
 
@@ -16,7 +17,7 @@ var linesController = {
     var options = {
       url: blueLine ,
       headers: {
-        'api_key': 'df9b24e4adcc47d287d4d79fd3f0a801'
+        'api_key': env.apiKey
         }
     };
 
@@ -25,6 +26,7 @@ var linesController = {
     request(options, function (err, response){
       lineData.name = "blue";
       lineData.stationCoordinates = response.body;
+      console.log(response.body);
       LineModel.create(lineData).then(function(){
         LineModel.find({name : "blue"}).then(function(data){
           var dataParsed = JSON.parse(data[0].stationCoordinates);
