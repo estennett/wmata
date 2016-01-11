@@ -11,8 +11,12 @@
     var self = this;
 
     LineService.ApiCall().then(function(data){
-      console.log(data.data.Path);
-      self.lines = data.data.Path
+      self.lines = data.data.Path;
+    })
+
+    LineService.StationApiCall().then(function(data){
+      console.log(data.data);
+      self.stations = data.data;
     })
   }
 

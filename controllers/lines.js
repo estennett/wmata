@@ -32,10 +32,6 @@ var linesController = {
           var dataParsed = JSON.parse(data[0].stationCoordinates);
           res.send(dataParsed)
         })
-        // LineModel.find({}).then(function(data){
-        //   var dataParsed = JSON.parse(data[70].stationCoordinates) //super key to use JSON.parse here!
-        //   res.send(dataParsed);
-        // });
       })
     })//end of request
   }// end getLineData function

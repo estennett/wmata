@@ -14,6 +14,7 @@
 
     return {
       ApiCall : ApiCall,
+      StationApiCall : StationApiCall
     }
 
     function ApiCall() {
@@ -22,6 +23,13 @@
           url: "http://localhost:4000/linedata"
         })
       }//end ApiCall function
+
+    function StationApiCall(){
+      return $http({
+        method: 'GET',
+        url: "http://localhost:4000/stations"
+      })
+    }
 
     };// end ServiceFunction
 }());

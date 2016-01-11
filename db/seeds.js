@@ -1,9 +1,14 @@
 var mongoose = require('mongoose');
 var conn = mongoose.connect('mongodb://localhost/wmata');
 var LineModel = require("../models/line");
+var StationModel = require("../models/stations");
 
 LineModel.remove({}, function(err){
-  console.log("Removed SubDocuments")
+  console.log("Removed sub-documents for lines")
+});
+
+StationModel.remove({}, function(err){
+  console.log("Removed sub-documents for stations")
 });
 
 // var blueLine = new LineModel({"name": "blue"});

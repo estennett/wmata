@@ -1,4 +1,14 @@
+
+
 <div data-ng-repeat= "line in LineIndexViewModel.lines">
-    Station Name: {{line.StationName}}
-    Line Color: {{line.LineCode}}
+  Station Name: {{line.StationName}}
+  Line Color: {{line.LineCode}}
 </div>
+
+<div data-ng-repeat = "station in LineIndexViewModel.stations">
+  {{station[3]}}
+</div>
+
+<!-- <div data-ng-controller = "LineIndexViewModel">
+  {{stations}}
+</div> -->

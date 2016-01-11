@@ -8,11 +8,16 @@ var LineSchema = new Schema(
     name: String,
     stationCoordinates: Object
   }
-  //unnecessary for now
-  // {
-  //   toObject: {virtuals: true},
-  //   toJSON: {virtuals: true}
-  // }
+);
+
+var StationSchema = new Schema(
+  {
+    stations: Array
+  }
 );
 
 var LineModel = mongoose.model("Line", LineSchema);
+var StationModel = mongoose.model("Station", StationSchema);
+
+// title: String,
+// stations: Object

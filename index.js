@@ -11,6 +11,7 @@ var app = express();
 
 //controllers
 var lineController = require("./controllers/lines");
+var stationController = require("./controllers/stations");
 
 //middleware
 app.use(bodyParser.json());
@@ -27,3 +28,5 @@ app.listen(process.env.PORT || 4000, function(){
 //routes
 app.get("/line", cors(), lineController.index);
 app.get("/linedata", cors(), lineController.getLineData);
+
+app.get("/stations", cors(), stationController.getStationData);
