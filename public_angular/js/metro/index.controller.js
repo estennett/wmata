@@ -10,15 +10,17 @@
 
     var self = this;
 
-    //Lines API Call
-    LineService.ApiCall().then(function(data){
-      self.dataLines = data.data.Path;
-    });
-
     //Stations API Call
     LineService.StationApiCall().then(function(data){
+      var self = this;
+
       self.dataStations = data.data;
-      D3scatterplot(self.dataStations, self.dataLines);
+
+      //lines API call
+      LineService.ApiCall().then(function(data){
+        self.dataLines = data.data[0].stations;
+        D3scatterplot(self.dataStations, self.dataLines);
+      });
     });
 
     //D3 Map
@@ -51,10 +53,10 @@
     }
 
     //scale function for the initial line data
-    // for (var i= 0; i < linePoints.length; i++){
-    //   var scaledDataLine = { "x" : xScale(linePoints[i].x), "y" : yScale(linePoints[i].y) }
-    //   newScaledLineData.push(scaledDataLine);
-    // }
+    for (var i= 0; i < linePoints.length; i++){
+      var scaledDataLine = { "x" : xScale(linePoints[i].x), "y" : yScale(linePoints[i].y) }
+      newScaledLineData.push(scaledDataLine);
+    }
 
     // var dataset = stations;
     var width = 1200;
@@ -66,19 +68,19 @@
           .attr("height", height);
 
     // for path
-    // var lineGroup = svg.append("g")
-    //
-    // var lineFunction = d3.svg.line()
-    //                    .x(function(d) { return (d.x); })
-    //                    .y(function(d) { return -(d.y); })
-    //                    .interpolate("linear");
-    //
-    // var lineGraph = lineGroup.append("path")
-    //                 .attr("d", lineFunction(newScaledLineData))
-    //                 .attr("stroke", "blue")
-    //                 .attr("stroke-width", 10)
-    //                 .attr("fill", "none")
-    //                 .attr("transform", "translate(" + 50 + "," + 1050 + ")");
+    var lineGroup = svg.append("g")
+
+    var lineFunction = d3.svg.line()
+                       .x(function(d) { return (d.x); })
+                       .y(function(d) { return -(d.y); })
+                       .interpolate("linear");
+
+    var lineGraph = lineGroup.append("path")
+                    .attr("d", lineFunction(newScaledLineData))
+                    .attr("stroke", "blue")
+                    .attr("stroke-width", 10)
+                    .attr("fill", "none")
+                    .attr("transform", "translate(" + 50 + "," + 1050 + ")");
 
     //aligns the metro map properly
     var circleGroup = svg.append("g")

@@ -54,7 +54,11 @@ var linesController = {
         }
 
         var finalLineData = {stations: parsedLineData};
-        // console.log(finalLineData)
+
+        //save line to database
+        LineModel.remove({}, function(err){
+          console.log("Removed sub-documents for lines")
+        });
 
         LineModel.create(finalLineData).then(function(){
           LineModel.find({}).then(function(data){

@@ -28,5 +28,4 @@ app.listen(process.env.PORT || 4000, function(){
 //routes
 app.get("/line", cors(), lineController.index);
 app.get("/linedata", cors(), lineController.getBlueLine);
-
 app.get("/stations", cors(), stationController.getStationData);
