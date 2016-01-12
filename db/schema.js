@@ -5,8 +5,7 @@ var Schema = mongoose.Schema,
 
 var LineSchema = new Schema(
   {
-    name: String,
-    stationCoordinates: Object
+    stations: Array
   }
 );
 

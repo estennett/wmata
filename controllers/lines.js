@@ -43,7 +43,6 @@ var linesController = {
       request (allStationsOptions, function(err, response){
         var parsedStationData = JSON.parse(response.body)
         var allStationsData = parsedStationData.Stations
-        // console.log(allStationsData)
 
         for ( i = 0; i < blueLineData.length; i ++){
           for( j = 0; j < allStationsData.length; j ++){
@@ -53,10 +52,17 @@ var linesController = {
             }
           }
         }
-        console.log(parsedLineData);
 
+        var finalLineData = {stations: parsedLineData};
+        // console.log(finalLineData)
+
+        LineModel.create(finalLineData).then(function(){
+          LineModel.find({}).then(function(data){
+            res.send(data)
+          })
+        })
+        // res.send(parsedLineData);
       })//end All Stations Request
-
     })//end Blue Line Request
 
   }//end getBlueLine function
