@@ -20,7 +20,7 @@
     function ApiCall() {
         return $http({
           method: 'GET',
-          url: "http://localhost:4000/linedata"
+          url: "http://localhost:4000/linedata/silver"
         })
       }//end ApiCall function
 
