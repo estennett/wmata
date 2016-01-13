@@ -8,27 +8,41 @@
 
   function IndexControllerFunction(LineService){
 
-    var self = this;
-
     //Stations API Call
     LineService.StationApiCall().then(function(data){
       var self = this;
-
       self.dataStations = data.data;
 
-      //lines API call
-      LineService.ApiCall().then(function(data){
-        self.dataLines = data.data[0].stations;
-        D3scatterplot(self.dataStations, self.dataLines);
+      //API call for all lines, puts them in a useful object
+      LineService.SilverCall().then(function(data){
+        var combineLines = {};
+        combineLines.silver = data.data[0].stations;
+
+        LineService.BlueCall().then(function(data){
+          combineLines.blue = data.data[0].stations;
+
+          LineService.YellowCall().then(function(data){
+            combineLines.yellow = data.data[0].stations;
+
+            LineService.GreenCall().then(function(data){
+              combineLines.green = data.data[0].stations;
+
+              LineService.OrangeCall().then(function(data){
+                combineLines.orange = data.data[0].stations;
+
+                LineService.RedCall().then(function(data){
+                  combineLines.red = data.data[0].stations;
+
+                  self.allLines = combineLines;
+
+                  D3scatterplot(self.dataStations, allLines);
+                })
+              })
+            })
+          })
+        })
       });
     });
-
-
-
-
-
-
-
 
     //D3 Map
   function D3scatterplot(stations, linePoints) {
@@ -59,12 +73,6 @@
       newScaledStationData.push(scaledArray);
     }
 
-    //scale function for the initial line data
-    for (var i= 0; i < linePoints.length; i++){
-      var scaledDataLine = { "x" : xScale(linePoints[i].x), "y" : yScale(linePoints[i].y) }
-      newScaledLineData.push(scaledDataLine);
-    }
-
     // var dataset = stations;
     var width = 1200;
     var height = 1200;
@@ -74,7 +82,12 @@
           .attr("width", width)
           .attr("height", height);
 
-    // for path
+    //scale function for the initial line data
+    for (var i= 0; i < linePoints.length; i++){
+      var scaledDataLine = { "x" : xScale(linePoints[i].x), "y" : yScale(linePoints[i].y) }
+      newScaledLineData.push(scaledDataLine);
+    }
+    // for line data path
     var lineGroup = svg.append("g")
 
     var lineFunction = d3.svg.line()
@@ -139,3 +152,15 @@
   };
   }
 })();
+
+// //Stations API Call
+// LineService.StationApiCall().then(function(data){
+//   var self = this;
+//   self.dataStations = data.data;
+//
+//   //API call for all lines, puts them in a useful object
+//   LineService.SilverCall().then(function(data){
+//     self.dataLines = data.data[0].stations;
+//     D3scatterplot(self.dataStations, self.dataLines);
+//   });
+// });
