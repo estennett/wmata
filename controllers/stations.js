@@ -17,8 +17,8 @@ var stationController = {
     request(options, function (err, response){
 
       var stationBody = JSON.parse(response.body)
-
       var stationData= { stations : stationBody.Stations };
+      console.log(stationData)
 
       StationModel.create(stationData).then(function(){
         StationModel.find({}).then(function(data){
@@ -29,6 +29,7 @@ var stationController = {
             station.push(data[0].stations[i].Lat);
             station.push(data[0].stations[i].LineCode1);
             station.push(data[0].stations[i].Name);
+            station.push(data[0].stations[i].Code);
             stations.push(station);
           }
           res.send(stations)

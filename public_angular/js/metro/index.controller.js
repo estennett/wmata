@@ -46,7 +46,6 @@
 
   //D3 Map Function, called in the last API call above
   function D3scatterplot(stations, linePoints) {
-    console.log(linePoints)
     var newScaledStationData = [];
 
     var newScaledSilverLineData = [];
@@ -57,13 +56,16 @@
     var newScaledOrangeLineData = [];
 
     //scale for the x coordinate data
+    var translateY = 2100;
+    var translateX = 50;
+
     var xScale = d3.scale.linear()
                    .domain([d3.min(stations, function(d){return d[0];}), d3.max(stations, function(d) { return d[0]; })])
-                   .range([0, 1500]);
+                   .range([0, 2000]);
     //scale for the y coordinate data
      var yScale = d3.scale.linear()
                     .domain([d3.min(stations, function(d){return d[1];}), d3.max(stations, function(d) { return d[1]; })])
-                    .range([0, 1500]);
+                    .range([0, 2000]);
 
     // scale function for the initial station data
     for (var i = 0; i < stations.length; i++) {
@@ -76,14 +78,16 @@
       scaledArray.push(lineColor);
       var stationName = stations[i][3];
       scaledArray.push(stationName);
+      var stationCode = stations[i][4];
+      scaledArray.push(stationCode);
       newScaledStationData.push(scaledArray);
     }
 
     // var dataset = stations;
-    var width = 1500;
-    var height = 1500;
+    var width = 2100;
+    var height = 2200;
 
-    var svg = d3.select("body")
+    var svg = d3.select(".svgDiv")
           .append("svg")
           .attr("width", width)
           .attr("height", height)
@@ -106,7 +110,7 @@
                     .attr("stroke", "silver")
                     .attr("stroke-width", 20)
                     .attr("fill", "none")
-                    .attr("transform", "translate(" + 50 + "," + 1050 + ")");
+                    .attr("transform", "translate(" + translateX + "," + translateY + ")");
 
     //scale for red line data and generate red line path
     for (var i= 0; i < linePoints.red.length; i++){
@@ -125,7 +129,7 @@
                     .attr("stroke", "red")
                     .attr("stroke-width", 10)
                     .attr("fill", "none")
-                    .attr("transform", "translate(" + 50 + "," + 1050 + ")");
+                    .attr("transform", "translate(" + translateX + "," + translateY + ")");
 
     //scale for orange line data and generate orange line path
     for (var i= 0; i < linePoints.orange.length; i++){
@@ -146,7 +150,7 @@
                     .attr("stroke", "orange")
                     .attr("stroke-width", 10)
                     .attr("fill", "none")
-                    .attr("transform", "translate(" + 50 + "," + 1050 + ")");
+                    .attr("transform", "translate(" + translateX + "," + translateY + ")");
 
     //scale for green line data and generate green line path
     for (var i= 0; i < linePoints.green.length; i++){
@@ -165,7 +169,7 @@
                     .attr("stroke", "green")
                     .attr("stroke-width", 20)
                     .attr("fill", "none")
-                    .attr("transform", "translate(" + 50 + "," + 1050 + ")");
+                    .attr("transform", "translate(" + translateX + "," + translateY + ")");
 
     //scale for yellow line data and generate yellow line path
     for (var i= 0; i < linePoints.yellow.length; i++){
@@ -184,7 +188,7 @@
                     .attr("stroke", "yellow")
                     .attr("stroke-width", 15)
                     .attr("fill", "none")
-                    .attr("transform", "translate(" + 50 + "," + 1050 + ")");
+                    .attr("transform", "translate(" + translateX + "," + translateY + ")");
 
     //scale for blue line data and generate blue line path
     for (var i= 0; i < linePoints.blue.length; i++){
@@ -203,11 +207,11 @@
                     .attr("stroke", "blue")
                     .attr("stroke-width", 5)
                     .attr("fill", "none")
-                    .attr("transform", "translate(" + 50 + "," + 1050 + ")");
+                    .attr("transform", "translate(" + translateX + "," + translateY + ")");
 
     //aligns the metro map properly
     var circleGroup = svg.append("g")
-                      .attr("transform", "translate(50,1050)");
+                      .attr("transform", "translate(50,2100)");
 
     circleGroup.selectAll("circle")
     .data(newScaledStationData)
@@ -229,6 +233,31 @@
     })
     .attr("station_name", function(d){
       return d[3]
+    })
+    .attr("station_code", function(d){
+      return d[4]
+    })
+    .on('click', function(d){
+      LineService.TrainPrediction(d[4]).then(function(data){
+
+        var track1 = {time : []};
+        var track2 = {time: []};
+        //
+        for(var i = 0; i < data.data.Trains.length; i ++){
+          if(data.data.Trains[i].Group == "1"){
+            track1.time.push(data.data.Trains[i].DestinationName + " " + data.data.Trains[i].Min)
+          }else if(data.data.Trains[i].Group == "2"){
+            track2.time.push(data.data.Trains[i].DestinationName + " " + data.data.Trains[i].Min)
+          }else{
+            console.log("nothing")
+          }
+        }
+        // console.log(data.data.Trains[0].Min)
+        console.log(data.data)
+        var allTracks = track1.time + "       " + track2.time
+        alert(allTracks)
+      })
+      // alert('This station is named: ' + d[3] + '.' + ' The station code is: ' + d[4])
     })
     .style("fill", function(d){
       if(d[2] === "BL"){

@@ -59,9 +59,7 @@ module.exports = {
         });
 
         lineModel.create(finalLineData).then(function(){
-          lineModel.find({}).then(function(data){
-            res.send(data)
-          })
+          console.log('model was saved')
         })
         // res.send(parsedLineData);
       })//end All Stations Request

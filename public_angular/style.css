@@ -1,1 +1,12 @@
+body{
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  background-color: #C1C4CB;
 
+}
+.svgDiv {
+  width: 100%;
+  overflow: scroll;
+  background-color: black;
+  border-radius: 25px;
+}

@@ -19,8 +19,16 @@
       BlueCall: BlueCall,
       YellowCall: YellowCall,
       GreenCall: GreenCall,
-      OrangeCall: OrangeCall
+      OrangeCall: OrangeCall,
+      TrainPrediction: TrainPrediction
     }
+
+    function TrainPrediction(code){
+      return $http({
+        method: 'GET',
+        url:  "http://localhost:4000/lineprediction/" + code
+      })
+    }//end TrainPrediction function
 
     function SilverCall() {
         return $http({
