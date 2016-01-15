@@ -234,12 +234,12 @@
 
       LineService.TrainPrediction(d[4]).then(function(data){
 
-
-
         var track1 = {time : []};
         var track2 = {time: []};
-        //
+        var trainStation = {station: ""};
+
         for(var i = 0; i < data.data.Trains.length; i ++){
+          trainStation.station = data.data.Trains[i].LocationName
           if(data.data.Trains[i].Group == "1"){
             track1.time.push(data.data.Trains[i].DestinationName + " " + data.data.Trains[i].Min)
           }else if(data.data.Trains[i].Group == "2"){
@@ -250,10 +250,10 @@
         }
         // console.log(data.data.Trains[0].Min)
 
-        var allTracks = {track1: track1, track2: track2}
+        var allTracks = {track1: track1.time.join(", "), track2: track2.time.join(", "), stationName: trainStation.station}
 
         // $(".ngdialog").remove()
-
+        console.log(allTracks)
         ngDialog.open({ template: "js/metro/dialogTemplate.html",
                         data: allTracks,
                         // className: 'ngdialog-theme-flat',

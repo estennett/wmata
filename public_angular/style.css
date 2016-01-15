@@ -5,7 +5,9 @@ body{
 
 }
 .svgDiv {
-  width: 100%;
+  margin: 0 auto;
+  width: 90%;
+  height: 80vh;
   overflow: scroll;
   background-color: black;
   border-radius: 25px;
