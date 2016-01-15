@@ -3,46 +3,23 @@
   .module("wmata")
   .controller("LineIndexController", [
     "LineService",
+    "ngDialog",
     IndexControllerFunction
   ])
 
-  function IndexControllerFunction(LineService){
+  function IndexControllerFunction(LineService, ngDialog){
 
-    //Stations API Call
-    LineService.StationApiCall().then(function(data){
-      var self = this;
-      self.dataStations = data.data;
+    var dataStations ;
+    var allLines ;
 
-      //API call for all lines, puts them in a useful object
-      LineService.SilverCall().then(function(data){
-        var combineLines = {};
-        combineLines.silver = data.data[0].stations;
-
-        LineService.BlueCall().then(function(data){
-          combineLines.blue = data.data[0].stations;
-
-          LineService.YellowCall().then(function(data){
-            combineLines.yellow = data.data[0].stations;
-
-            LineService.GreenCall().then(function(data){
-              combineLines.green = data.data[0].stations;
-
-              LineService.OrangeCall().then(function(data){
-                combineLines.orange = data.data[0].stations;
-
-                LineService.RedCall().then(function(data){
-                  combineLines.red = data.data[0].stations;
-
-                  self.allLines = combineLines;
-
-                  D3scatterplot(self.dataStations, allLines);
-                })
-              })
-            })
-          })
-        })
-      });
+    LineService.getAllLines().then(function(data){
+      allLines = data;
+      return LineService.getStationData()
+    }).then(function(data){
+      dataStations = data.data;
+        D3scatterplot(dataStations, allLines);
     });
+
 
   //D3 Map Function, called in the last API call above
   function D3scatterplot(stations, linePoints) {
@@ -237,8 +214,28 @@
     .attr("station_code", function(d){
       return d[4]
     })
+    // .on("mouseover", function(d){
+    //
+    //   var xPosition = parseFloat(d3.select(this).attr("cx")) + 2;
+    //   var yPosition = parseFloat(d3.select(this).attr("yy")) + 14;
+    //
+    //   svg.append("text")
+    // .attr("id", "tooltip")
+    // .attr("x", xPosition)
+    // .attr("y", yPosition)
+    // .attr("text-anchor", "middle")
+    // .attr("font-family", "sans-serif")
+    // .attr("font-size", "11px")
+    // .attr("font-weight", "bold")
+    // .attr("fill", "black")
+    // .text(d[3]);
+    // })
     .on('click', function(d){
+
+
       LineService.TrainPrediction(d[4]).then(function(data){
+
+
 
         var track1 = {time : []};
         var track2 = {time: []};
@@ -253,11 +250,17 @@
           }
         }
         // console.log(data.data.Trains[0].Min)
-        console.log(data.data)
-        var allTracks = track1.time + "       " + track2.time
-        alert(allTracks)
+
+        var allTracks = {track1: track1, track2: track2}
+
+
+        ngDialog.open({ template: "js/metro/dialogTemplate.html",
+                        data: allTracks});
+
+        // ngDialog.open({ template: "<div>" + data.data.Trains[0].Min + "</div>",
+        //                 plain: true});
+        // alert(allTracks)
       })
-      // alert('This station is named: ' + d[3] + '.' + ' The station code is: ' + d[4])
     })
     .style("fill", function(d){
       if(d[2] === "BL"){

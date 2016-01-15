@@ -4,6 +4,7 @@
   angular
   .module("wmata", [
     "ui.router",
+    "ngDialog",
     "wmata"
   ])
   .config([
@@ -12,6 +13,7 @@
   ]);
 
   function RouterFunction($stateProvider){
+
     $stateProvider
     .state("indexPage", {
       url: "/index",

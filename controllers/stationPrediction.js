@@ -6,7 +6,6 @@ var stationPredictionController = {
 
   findStation: function(req, res){
 
-
     var stationOptions = {
       url: "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + req.params.station,
       headers: {
