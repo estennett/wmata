@@ -232,7 +232,6 @@
     // })
     .on('click', function(d){
 
-
       LineService.TrainPrediction(d[4]).then(function(data){
 
 
@@ -253,9 +252,12 @@
 
         var allTracks = {track1: track1, track2: track2}
 
+        // $(".ngdialog").remove()
 
         ngDialog.open({ template: "js/metro/dialogTemplate.html",
-                        data: allTracks});
+                        data: allTracks,
+                        // className: 'ngdialog-theme-flat',
+                        showClose: true });
 
         // ngDialog.open({ template: "<div>" + data.data.Trains[0].Min + "</div>",
         //                 plain: true});
