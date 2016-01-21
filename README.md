@@ -16,8 +16,9 @@ I used NgDialog to help with the pop up dialog box when each station is clicked.
 
 ##Future Plans
 
--Appropriately style the app, preferably using SASS.
--Persist station train arrival time in the backend database so that the data can be compared with an ideal train schedule, allowing for statistical representation of train schedule discrepancies.
+- Appropriately style the app, preferably using SASS.
+
+- Persist station train arrival time in the backend database so that the data can be compared with an ideal train schedule, allowing for statistical representation of train schedule discrepancies.
 
 ##Bugs
 
