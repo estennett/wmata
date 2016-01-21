@@ -8,3 +8,5 @@ Also:
 
 <tab> key completion
 <up-arrow> and the <down-arrow> for history.
+
+git rm -r --cached node_modules
