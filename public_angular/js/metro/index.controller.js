@@ -287,6 +287,11 @@
           return d;
     })
   };
+
+  // var myDiv = $("");
+  // var scrollto = myDiv.offset().left + (myDiv.width() / 2);
+  // myDiv.animate({ scrollLeft:  scrollto});
+
   }
 })();
 
