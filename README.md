@@ -28,6 +28,6 @@ The rail predictions are not complete for the following stations: Metro Center, 
 
 ##Deployment
 
-The app is not publicly deployed yet, however it is working fine.  Just create an ENV for the Express app portion.  Inside the ENV file add an api_key variable with a working WMATA API key and it will work on your local machine as well.  
+The app is available publicly [here](https://wmata-in-d3.herokuapp.com/#/index).
 
 ##Please submit a PR for any issues that arise when using the app.
